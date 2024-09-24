@@ -19,10 +19,12 @@ The database used for this paper was built in December 2022 and can be found [he
 The JAMSbeta pipeline will look for sample prefixes present within a column named "Sample" of the metadata file supplied and select the corresponding jamsfiles present within the folder specified following the `-y` argument:
 
 ```bash
-JAMSbeta -p DavarCpG -t metadata_file.tsv -y /path/to/folder/with/jamsfiles -n LKT,Product,ECNumber,GO,Interpro
+JAMSbeta -p DavarCpG -t metadata_file.tsv -y /path/to/folder/with/jamsfiles -n LKT,Product,ECNumber,GO,Interpro -u
 ```
 
 This will create an R-session image (.RData) containing [SummarizedExperiment](https://bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html) objects which can be used with the JAMS package plotting functions.
+
+Note the use of the "-u" option (stratify function by taxonomy) when running JAMSbeta. This will ensure that non-taxonomic (functional) SummarizedExperiment objects will also contain information as to which LKTs contribute to each functional feature count within each sample. See the code for Supplemental figure 7c-g.
 
 ## Analysis of fecal samples obtained from humans
 
@@ -145,6 +147,60 @@ plot_relabund_heatmap(samplesToKeep = Samples_Intermediate, featuresToKeep = NUL
 }
 ```
 
+## Supplementary Figure 7b
+
+First, get a vector of the relevant LPS accessions we want to plot from the "Product" SummarizedExperiment object.
+```R
+Product_ftt <- as.data.frame(rowData(expvec$Product))
+LPS_genes_Product_df <- Product_ftt[grep("lpx", Product_ftt$Description), ]
+#Add the one whose gene symbol does not begin with "lpx"
+LPS_genes_Product_df <- rbind(LPS_genes_Product_df, Product_ftt["3-deoxy-D-manno-octulosonic acid transferase", ])
+LPS_genes_Product <- LPS_genes_Product_df$Accession
+
+Relevant_LPS_accessions <- subset(LPS_genes_Product_df, Description %in% c("lpxT", "lpxP", "lpxM", "waaA", "lpxL", "lpxC", "lpxB", "lpxA", "lpxD", "lpxK", "lpxH"))[]$Accession
+#Remove duplicate entry
+Relevant_LPS_accessions <- Relevant_LPS_accessions[Relevant_LPS_accessions != "UDP-3-O-(3-hydroxymyristoyl)glucosamine N-acyltransferase"]
+```
+
+Plot a heatmap, scaled and non-scaled of these gene products within the "Intermediate" timepoint samples only.
+
+```R
+# Code for Supplementary Figure 7b
+pdf("Figure_S7b.pdf", paper = "a4r")
+
+for (sca in c(TRUE, FALSE)){
+    plot_relabund_heatmap(samplesToKeep = Samples_Intermediate, featuresToKeep = Relevant_LPS_accessions, 
+    ExpObj = expvec[["Product"]], hmtype = "comparative", compareby = "MPR", 
+    applyfilters = NULL, featcutoff = NULL, cdict = NULL, colcategories = c("MPR", "Regression"), 
+    showonlypbelow = NULL, adj_pval_for_threshold = FALSE, textby = "Timepoint_days_labels", 
+    subsetby = NULL, max_rows_in_heatmap = 100, cluster_rows = FALSE,
+    row_order = Relevant_LPS_accessions, ordercolsby = NULL, 
+    splitcolsby = "MPR", column_split_group_order = c("MPR", "No_MPR"),
+    scaled = sca, minl2fc = NULL, maxnumheatmaps = 2, invertbinaryorder = FALSE, 
+    showGram = FALSE, cluster_samples_per_heatmap = TRUE, cluster_features_per_heatmap = TRUE,
+    addtit = paste(ts, "- Only LPS related Genes"), no_underscores = TRUE, 
+    label_samples = TRUE, returnstats = FALSE)
+}
+dev.off()
+
+```
+## Supplementary Figure 7c to g
+Plot boxplots for relevant LPS signatures representing their taxonomically independent relative abundance within each sample for each group. Additionally, stratify the relative abundance of each LPS feature of interest by its contributing taxa.
+
+```R
+# Code for Supplementary Figure 7 c to g
+pdf("Figure_S7c-g.pdf", paper = "a4r")
+
+print(plot_relabund_features(ExpObj = expvec[["Product"]], glomby = NULL, 
+    samplesToKeep = Samples_Intermediate, featuresToKeep = Relevant_LPS_accessions, aggregatefeatures = FALSE,
+    compareby = "MPR", compareby_order = c("MPR", "No_MPR"), colourby = "MPR",
+    applyfilters = NULL, log2tran_main_plot = FALSE, log2tran_strat_plot = TRUE,
+    statsonlog = FALSE, stratify_by_taxlevel = "LKT", maxnumtaxa = 20, plot_points_on_taxonomy = TRUE))
+dev.off()
+
+```
+
+## Machine Learning section
 ## Supplementary Figure 8
 By Jonathan Badger
 ```R
