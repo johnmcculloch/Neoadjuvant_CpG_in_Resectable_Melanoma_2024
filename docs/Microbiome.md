@@ -60,9 +60,10 @@ Samples_4_pre_surgical_timepoints <- c("PD1UOP004W1CpG202205", "PD1UOP007W1CpG20
 # Code for Figure 7a
 # Use all samples
 pdf("Figure_7_a.pdf", paper = "a4r")
-print(plot_Ordination(ExpObj = expvec[["LKT"]], samplesToKeep = NULL, algorithm = "tUMAP", distmethod = "bray",
-    compareby = "Patient_ID", colourby = NULL, shapeby = "Patient_ID", connectby = "Patient_ID", connection_orderby = "Timepoint_days_labels",  textby = "Timepoint_days_labels",
-    dotsize = 1.3, grid = FALSE, forceaspectratio = 1, permanova = FALSE))
+print(plot_Ordination(ExpObj = expvec[["LKT"]], samplesToKeep = NULL, algorithm = "tUMAP",
+    distmethod = "bray", compareby = "Patient_ID", colourby = NULL, shapeby = "Patient_ID", 
+    connectby = "Patient_ID", connection_orderby = "Timepoint_days_labels",
+    textby = "Timepoint_days_labels", dotsize = 1.3, grid = FALSE, forceaspectratio = 1, permanova = FALSE))
 dev.off()
 
 ```
@@ -71,9 +72,11 @@ dev.off()
 ```R
 # Code for Figure 7b
 pdf("Figure_7_b.pdf", paper = "a4r")
-print(plot_Ordination(ExpObj = expvec[["LKT"]], samplesToKeep = Samples_Intermediate, featuresToKeep = moderateLKTs,
-    applyfilters = NULL, algorithm = "tUMAP", distmethod = "bray", compareby = "MPR", colourby = "MPR",
-    dotsize = 1, plotcentroids = TRUE, highlight_centroids = TRUE, grid = FALSE, forceaspectratio = 1, permanova = TRUE, permanova_permutations = 10000))
+print(plot_Ordination(ExpObj = expvec[["LKT"]], samplesToKeep = Samples_Intermediate,
+    featuresToKeep = moderateLKTs,  applyfilters = NULL, algorithm = "tUMAP", 
+    distmethod = "bray", compareby = "MPR", colourby = "MPR",
+    dotsize = 1, plotcentroids = TRUE, highlight_centroids = TRUE, grid = FALSE,
+    forceaspectratio = 1, permanova = TRUE, permanova_permutations = 10000))
 dev.off()
 
 ```
@@ -83,10 +86,12 @@ dev.off()
 # Code for Figure 7c
 pdf("Figure_7_c.pdf", paper = "a4r")
 
-plot_relabund_heatmap(samplesToKeep = Samples_Intermediate, featuresToKeep = moderateLKTs, ExpObj = expvec[["LKT"]], 
-    hmtype = "comparative", compareby = "MPR", applyfilters = NULL, featcutoff = NULL, cdict = cdict, colcategories = c("MPR", "Relapse"), 
+plot_relabund_heatmap(samplesToKeep = Samples_Intermediate, featuresToKeep = moderateLKTs, 
+    ExpObj = expvec[["LKT"]], hmtype = "comparative", compareby = "MPR", applyfilters = NULL, 
+    featcutoff = NULL, cdict = cdict, colcategories = c("MPR", "Relapse"), 
     showonlypbelow = 0.05, adj_pval_for_threshold = FALSE, cluster_rows = TRUE, 
-    splitcolsby = "MPR", scaled = TRUE, minl2fc = 1, invertbinaryorder = TRUE, showGram = TRUE, no_underscores = TRUE, label_samples = FALSE)
+    splitcolsby = "MPR", scaled = TRUE, minl2fc = 1, invertbinaryorder = TRUE,
+    showGram = TRUE, no_underscores = TRUE, label_samples = FALSE)
 ```
 
 ## Figure 7 panel d
@@ -94,9 +99,11 @@ plot_relabund_heatmap(samplesToKeep = Samples_Intermediate, featuresToKeep = mod
 # Code for Figure 7d
 pdf("Figure_7_d.pdf", paper = "a4r")
 
-print(plot_Ordination(ExpObj = expvec[["LKT"]], samplesToKeep = Samples_4_pre_surgical_timepoints, featuresToKeep = moderateLKTs,
-    applyfilters = NULL, algorithm = "tUMAP", distmethod = "bray", compareby = "MPR", colourby = "MPR",
-    dotsize = 1, plotcentroids = TRUE, highlight_centroids = TRUE, grid = FALSE, forceaspectratio = 1, permanova = TRUE, permanova_permutations = 10000))
+print(plot_Ordination(ExpObj = expvec[["LKT"]], samplesToKeep = Samples_4_pre_surgical_timepoints, 
+    featuresToKeep = moderateLKTs, applyfilters = NULL, algorithm = "tUMAP", 
+    distmethod = "bray", compareby = "MPR", colourby = "MPR",
+    dotsize = 1, plotcentroids = TRUE, highlight_centroids = TRUE, 
+    grid = FALSE, forceaspectratio = 1, permanova = TRUE, permanova_permutations = 10000))
 dev.off()
 
 ```
@@ -106,8 +113,10 @@ dev.off()
 # Code for Figure 7f
 pdf("Figure_7_f.pdf", paper = "a4r")
 
-plot_relabund_features(ExpObj = expvec[["LKT"]], glomby = "Gram", samplesToKeep = Samples_Intermediate, featuresToKeep = c("negative", "positive", "undetermined"),
-    aggregatefeatures = FALSE, aggregatefeatures_label = "Sum_of_wanted_features", compareby = "MPR", compareby_order = c("Non-MPR", "MPR"), 
+plot_relabund_features(ExpObj = expvec[["LKT"]], glomby = "Gram", 
+    samplesToKeep = Samples_Intermediate, featuresToKeep = c("negative", "positive", "undetermined"),
+    aggregatefeatures = FALSE, aggregatefeatures_label = "Sum_of_wanted_features", 
+    compareby = "MPR", compareby_order = c("Non-MPR", "MPR"), 
     colourby = "MPR", signiflabel = "p.format", ignoreunclassified = TRUE, y_axis_range = 1000000)
 
 dev.off()
@@ -127,9 +136,11 @@ Cladogram by Richard Rodrigues
 # Code for Figure 8b
 pdf("Figure_8_b.pdf", paper = "a4r")
 for (anal in c("Product", "ECNumber", "GO", "Interpro")){
-    print(plot_Ordination(ExpObj = expvec[[anal]], samplesToKeep = Samples_Intermediate, featuresToKeep = NULL,
-    applyfilters = NULL, algorithm = "tUMAP", distmethod = "bray", compareby = "MPR", colourby = "MPR",
-    dotsize = 1, plotcentroids = TRUE, highlight_centroids = TRUE, grid = FALSE, forceaspectratio = 1, permanova = TRUE, permanova_permutations = 10000))
+    print(plot_Ordination(ExpObj = expvec[[anal]], samplesToKeep = Samples_Intermediate,
+    featuresToKeep = NULL, applyfilters = NULL, algorithm = "tUMAP", distmethod = "bray",
+    compareby = "MPR", colourby = "MPR", dotsize = 1, plotcentroids = TRUE,
+    highlight_centroids = TRUE, grid = FALSE, forceaspectratio = 1, permanova = TRUE,
+    permanova_permutations = 10000))
 }
 dev.off()
 
@@ -140,10 +151,12 @@ dev.off()
 # Code for Supplementary Figure 6
 pdf("Figure_S6.pdf", paper = "a4r")
 for(anal in c("Product", "ECNumber", "GO", "Interpro")){
-plot_relabund_heatmap(samplesToKeep = Samples_Intermediate, featuresToKeep = NULL, ExpObj = expvec[[anal]], 
-    hmtype = "comparative", compareby = "MPR", applyfilters = NULL, featcutoff = NULL, cdict = cdict, colcategories = c("MPR", "Relapse"), 
+plot_relabund_heatmap(samplesToKeep = Samples_Intermediate, featuresToKeep = NULL,
+    ExpObj = expvec[[anal]], hmtype = "comparative", compareby = "MPR", applyfilters = NULL,
+    featcutoff = NULL, cdict = cdict, colcategories = c("MPR", "Relapse"), 
     showonlypbelow = 0.01, adj_pval_for_threshold = FALSE, cluster_rows = TRUE, 
-    splitcolsby = "MPR", scaled = TRUE, minl2fc = 1, invertbinaryorder = TRUE, showGram = TRUE, no_underscores = TRUE, label_samples = FALSE)
+    splitcolsby = "MPR", scaled = TRUE, minl2fc = 1, invertbinaryorder = TRUE,
+    showGram = TRUE, no_underscores = TRUE, label_samples = FALSE)
 }
 ```
 
@@ -192,9 +205,9 @@ Plot boxplots for relevant LPS signatures representing their taxonomically indep
 pdf("Figure_S7c-g.pdf", paper = "a4r")
 
 print(plot_relabund_features(ExpObj = expvec[["Product"]], glomby = NULL, 
-    samplesToKeep = Samples_Intermediate, featuresToKeep = Relevant_LPS_accessions, aggregatefeatures = FALSE,
-    compareby = "MPR", compareby_order = c("MPR", "No_MPR"), colourby = "MPR",
-    applyfilters = NULL, log2tran_main_plot = FALSE, log2tran_strat_plot = TRUE,
+    samplesToKeep = Samples_Intermediate, featuresToKeep = Relevant_LPS_accessions, 
+    aggregatefeatures = FALSE, compareby = "MPR", compareby_order = c("MPR", "No_MPR"),
+    colourby = "MPR", applyfilters = NULL, log2tran_main_plot = FALSE, log2tran_strat_plot = TRUE,
     statsonlog = FALSE, stratify_by_taxlevel = "LKT", maxnumtaxa = 20, plot_points_on_taxonomy = TRUE))
 dev.off()
 
