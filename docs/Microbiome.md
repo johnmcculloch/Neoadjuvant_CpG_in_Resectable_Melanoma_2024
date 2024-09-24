@@ -33,8 +33,8 @@ We encourage you to browse through the standard [JAMS beta tutorial](https://git
 
 All code below was run in R after loading the JAMS package and code for Figures 7a, 7b, 7c, 7d, 7f, 8b, S6, S7b, S7c, and S7d was written and developed by John A. McCulloch. 
 
-Define a vector with "Intermediate" timepoint samples which will make it more convenient for plotting subsequent plots (see below).
 
+For consistency, obtain a vector with taxonomic features which survive "moderate" filtering, i.e. LKTs surviving at least 250 PPM in 15% of samples and having an estimated genome completeness of at least 10% in 5% of samples.
 ```R
 library(JAMS)
 currobj <- filter_experiment(ExpObj = expvec$LKT, featcutoff = c(250, 15),asPPM = TRUE, PPM_normalize_to_bases_sequenced = FALSE, GenomeCompletenessCutoff = c(10, 5))
@@ -42,7 +42,8 @@ currobj <- filter_experiment(ExpObj = expvec$LKT, featcutoff = c(250, 15),asPPM 
 moderateLKTs <- rownames(currobj)
 ```
 
-For consistency, obtain a vector with taxonomic features which survive "moderate" filtering, i.e. LKTs surviving at least 250 PPM in 15% of samples and having an estimated genome completeness of at least 10% in 5% of samples.
+Define vectors with the names of samples at specific timepoints. This will make it more convenient for plotting subsequent plots (see below).
+
 ```R
 Samples_Intermediate <- c("PD1UOP004W3CpG202205", "PD1UOP005W7CpG202205", "PD1UOP007W3CpG202205", "PD1UOP008ACpG202112", "PD1UOP009CpG202112", "PD1UOP010BCpG202112", "PD1UOP011BCpG202112", "PD1UOP013BCpG202112", "PD1UOP014BCpG202112", "PD1UOP015BCpG202112", "PD1UOP016BCpG202112", "PD1UOP018BCpG202112", "PD1UOP019BCpG202112", "PD1UOP021BCpG202112", "PD1UOP022ECpG202112", "PD1UOP023BCpG202112", "PD1UOP024BCpG202112", "PD1UOP025BCpG202112", "PD1UOP026W3CpG202205", "PD1UOP027BCpG202112", "PD1UOP030BCpG202112", "PD1UOP032W3CpG202205", "PD1UOP033BCpG202112", "PD1UOP034W3CpG202205", "PD1UOP035BCpG202112", "PD1UOP036W3CpG202205", "PD1UOP001W3CpG202205", "PD1UOP002W3CpG202205", "PD1UOP037W3CpG202205")
 
