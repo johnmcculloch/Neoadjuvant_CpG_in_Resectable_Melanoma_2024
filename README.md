@@ -7,4 +7,4 @@ All of the DNA sequencing data has been deposited to the [Sequence Read Archive 
 Click below for more information on the code and approach used for MICROBIOME sequencing analyis used on the paper:
 
 ## [Analysis of MICROBIOME shotgun sequencing data](docs/Microbiome.md)
-## [Analysis of HUMAN sequencing data](docs/Human.md)
+
